@@ -47,3 +47,16 @@ Install the Library
 make install
 ```
 
+### Mac Xcode Setting
+Make Xcode Command Line Tool
+![commandLineTool](./images/commandLineTool.PNG)
+
+Add Dynamic Librarys to Xcode Project
+![dylibs](./images/opencv_dylibs.PNG)
+
+Add Build Settings
+- Header Search Paths: /usr/local/include/, /usr/local/include/opencv4/
+- Library Search Paths: /usr/local/lib/
+
+Disable Library Validation
+![dylibs](./images/disableLibValidation.PNG)
