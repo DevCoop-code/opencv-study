@@ -41,3 +41,9 @@ Build. From build directory execute
 ```
 make
 ```
+
+Install the Library
+```
+make install
+```
+
