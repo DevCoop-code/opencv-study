@@ -49,9 +49,12 @@ make install
 
 ### Mac Xcode Setting
 Make Xcode Command Line Tool
+
 ![commandLineTool](images/commandLineTool.png)
 
+
 Add Dynamic Librarys to Xcode Project
+
 ![dylibs](images/opencv_dylibs.png)
 
 Add Build Settings
@@ -59,4 +62,5 @@ Add Build Settings
 - Library Search Paths: /usr/local/lib/
 
 Disable Library Validation
+
 ![dylibs](images/disableLibValidation.png)
