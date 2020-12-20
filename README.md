@@ -28,3 +28,16 @@ Create a temporary directory(ex] build_opencv) in root directory as same level a
     -- [opencv]         <-- Clone from opencv.git
 ```
 
+Configuring. Run 
+```
+cmake [<some optional parameters>] <path to the OpenCV source directory>
+```
+For Example
+```
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=ON ../opencv
+```
+
+Build. From build directory execute
+```
+make
+```
