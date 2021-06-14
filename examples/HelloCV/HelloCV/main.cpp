@@ -13,6 +13,8 @@ using namespace std;
 
 void on_threshold(int pos, void* userdata);
 void erode_dilate();
+void open_close();
+void labeling_stats();
 
 int main(int argc, const char * argv[]) {
     /*
@@ -63,6 +65,16 @@ int main(int argc, const char * argv[]) {
      */
 //    erode_dilate();
     
+    /*
+     Open Close Binary
+     */
+//    open_close();
+    
+    /*
+    Labeing
+     */
+    labeling_stats();
+    
     waitKey();
     
     return 0;
@@ -99,6 +111,61 @@ void erode_dilate()
     imshow("bin", bin);
     imshow("erode", dst1);
     imshow("dilate", dst2);
+    
+    waitKey();
+    destroyAllWindows();
+}
+
+void open_close()
+{
+    Mat src = imread("/Users/hangyojeong/Desktop/waterdrop.jpeg", IMREAD_GRAYSCALE);
+    
+    Mat bin;
+    threshold(src, bin, 0, 255, THRESH_BINARY || THRESH_OTSU);
+    
+    Mat dst1, dst2;
+    morphologyEx(src, dst1, MORPH_OPEN, Mat());
+    morphologyEx(src, dst2, MORPH_CLOSE, Mat());
+    
+    imshow("src", src);
+    imshow("bin", bin);
+    imshow("erode", dst1);
+    imshow("dilate", dst2);
+    
+    waitKey();
+    destroyAllWindows();
+}
+
+void labeling_stats()
+{
+    Mat src = imread("/Users/hangyojeong/Desktop/alphabet.jpeg", IMREAD_GRAYSCALE);
+    
+    if (src.empty())
+    {
+        cerr << "Image load failed!" << endl;
+        return;
+    }
+    
+    Mat bin;
+    threshold(src, bin, 0, 255, THRESH_BINARY_INV | THRESH_OTSU);
+    
+    Mat labels, stats, centroids;
+    int cnt = connectedComponentsWithStats(bin, labels, stats, centroids);
+    
+    Mat dst;
+    cvtColor(src, dst, COLOR_GRAY2BGR);
+    
+    for (int i = 1; i < cnt; i++)
+    {
+        int* p = stats.ptr<int>(i);
+        
+        if (p[4] < 20) continue;
+        
+        rectangle(dst, Rect(p[0], p[1], p[2], p[3]), Scalar(0, 255, 255), 2);
+    }
+    
+    imshow("src", src);
+    imshow("dst", dst);
     
     waitKey();
     destroyAllWindows();
