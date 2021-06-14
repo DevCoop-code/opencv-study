@@ -12,6 +12,7 @@ using namespace cv;
 using namespace std;
 
 void on_threshold(int pos, void* userdata);
+void erode_dilate();
 
 int main(int argc, const char * argv[]) {
     /*
@@ -38,6 +39,7 @@ int main(int argc, const char * argv[]) {
     /*
      Global Binary Threshold Code
      */
+    /*
     Mat src;
     if (argc < 2)
         src = imread("/Users/hangyojeong/Desktop/chunsik.png", IMREAD_GRAYSCALE);
@@ -54,6 +56,12 @@ int main(int argc, const char * argv[]) {
     namedWindow("dst");         // Create the Window named argument
     createTrackbar("Threshold", "dst", 0, 255, on_threshold, (void*)&src);      // Create TrackBar(UI Component) & Register the Callback Func(on_threshold func)
     setTrackbarPos("Threshold", "dst", 128);        // Set Default TrackBar Position
+    */
+    
+    /*
+     Adaptive Binary
+     */
+//    erode_dilate();
     
     waitKey();
     
@@ -68,4 +76,30 @@ void on_threshold(int pos, void* userdata)
     threshold(src, dst, pos, 255, THRESH_BINARY);
     
     imshow("dst", dst);
+}
+
+void erode_dilate()
+{
+    Mat src = imread("/Users/hangyojeong/Desktop/waterdrop.jpeg", IMREAD_GRAYSCALE);
+    
+    if (src.empty())
+    {
+        cerr << "Image load failed!" << endl;
+        return;
+    }
+    
+    Mat bin;
+    threshold(src, bin, 0, 255, THRESH_BINARY | THRESH_OTSU);
+    
+    Mat dst1, dst2;
+    erode(bin, dst1, Mat());
+    dilate(bin, dst2, Mat());
+    
+    imshow("src", src);
+    imshow("bin", bin);
+    imshow("erode", dst1);
+    imshow("dilate", dst2);
+    
+    waitKey();
+    destroyAllWindows();
 }
